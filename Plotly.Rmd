@@ -1,0 +1,828 @@
+---
+title: "Data visualisation interactive avec Plotly"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Sommaire
+
+## I - Introduction
+### Qu'est ce que la data visualisation ?
+### Plotly
+
+## II - Création de visules
+### Nuage de points
+### Graphique linéaire
+### Diagramme à barre
+### Diagramme Camembert
+### Boîte à moustache
+### Cartes
+### 3D
+
+## III - Publication de visuels
+### HTML
+### Image
+
+## IV -  Animation et organisation de visuels
+
+# I - Introduction
+## Qu'est ce que la data visualisation ?
+
+La data visualisation permet d'ilustrer des données ou des informations de manière ludique, c'est une manière de capter l’attention du public.
+
+Les entreprises ont tout intérêt à comprendre et maitriser la data visualisation si elles veulent rendre leurs contenus compréhensibles et attractifs.
+
+La data visualisation permet d’agréger des bribes d’informations minuscules, dispersées sur internet, par une représentation graphique interactive la plus ergonomique possible. Ces représentations sont LE visage de la data. La data visualisation est devenue incontournable lorsqu’on a des données à mettre en forme afin de conserver les plus pertinentes et d’en tirer un message intéressant.
+
+## Plotly
+
+### Définition
+
+La package Plotly nous permet de créer une varité de graphiques interactifs de qualité. Avec ce package, on peut créer des graphiques linéaires, des nuages de points, des graphiques en aires, des graphiques à barres, des barres d'erreur, des boîtes à moustaches, des histogrammes, des cartes thermiques, des sous-graphiques, des graphiques à plusieurs axes, des graphiques polaires, des graphiques à bulles...
+
+Plotly.py est gratuit et open source.
+
+Il existe deux manières principales de créer un objet plotly : 
+
+- Soit en transformant un objet ggplot2 (via ggplotly ()) en un objet plotly
+- Soit en initialisant directement un objet plotly avec plot_ly () / plot_geo () / plot_mapbox (). 
+
+Les deux approches ont des forces et des faiblesses quelque peu complémentaires, de sorte qu'il peut être rentable d'apprendre les deux approches. De plus, les deux approches sont une implémentation de la grammaire des graphiques et les deux sont alimentées par la bibliothèque de graphes JavaScript plotly.js. Beaucoup de concepts et outils qu'on utilisera pour une manière pourront être utilisés pour l'autre.
+
+### Package Plotly
+
+On installe ici le package Ploty :
+
+```{r plotly, message= FALSE} 
+install.packages("plotly")
+library(plotly)
+
+#Autres librairies utiles
+
+library(rmarkdown)
+library(dplyr)
+library(ggmosaic)
+
+```
+
+Exemple d'utilisation:
+
+On charge le jeu de données "diamants" du package ggplot2 :
+
+```{r diamant, message= FALSE} 
+# Préparation des données
+
+data(diamonds, package = "ggplot2")
+paged_table(diamonds)
+```
+
+On affecte à "x" la variable "cut" du jeu de données "diamants" et on l'affiche sous forme de graphique :
+
+```{r premier graphique, message=FALSE}
+# Data visualisation
+
+plot_ly(diamonds, x = ~cut)
+```
+
+On affecte maintenant à "y" la variable "clarity" du jeu de données :
+
+```{r deuxième graphique, message= FALSE} 
+# Data visualisation
+
+plot_ly(diamonds, x = ~cut, y = ~clarity)
+```
+
+On joue avec d'autres propriétés visuelles (ici la couleur) :
+
+```{r troisième graphique , message= FALSE} 
+# Data visualisation
+
+plot_ly(diamonds, x = ~cut, color = ~clarity, colors = "Accent")
+```
+
+Nous allons qu'il existe énormément de paramètres pour jouer avec les graphiques. On peut modifier les couleurs, ajouter des titres et des légendes, choisir où positionner le titre et les légendes, modifier la taille du graphique ou des barres...
+
+
+
+
+# II - Création de visuels avec Plotly
+
+
+
+## Nuages de points
+
+En statistiques, un nuage de points est une représentation de données dépendant de plusieurs variables. Il permet de mettre en évidence le degré de corrélation entre au moins deux variables liées.
+
+Les nuages de points peuvent être utiles pour exposer d'autres caractéristiques importantes, notamment: les relations occasionnelles, les valeurs aberrantes, les groupes, les écarts, les barrières et les relations conditionnelles.
+
+### Nuages de points basique
+
+On charge le jeu de données "iris" qui est disponible :
+
+```{r nuage , message=FALSE}
+
+#Préparation des données
+
+paged_table(iris)
+```
+
+On affiche le graphique : 
+
+```{r nuage2 , message=FALSE}
+#Data visualisation
+
+plot_ly (data = iris, 
+         x = ~ Sepal.Length, 
+         y = ~ Petal.Length,
+         type = 'scatter',
+         mode = 'markers',
+         hoverinfo = 'text',
+         text = ~paste('</br> Species: ', Species,
+                      '</br> Petal Length: ', Petal.Length,
+                      '</br> Petal Width: ', Petal.Width))
+
+```
+
+Les paramètres sont : 
+
+`data = ` : Le dataset importé
+
+`x = ` : Valeurs des abscisses
+
+`y = ` : Valeurs des ordonnées
+
+### Définition
+
+*#????????????????????????????????????????????????????*
+Une figure plotly.js contient une (ou plusieurs) trace (s), et chaque trace a un type.
+La dispersion de type tracé est idéale pour dessiner des géométries de bas niveau (par exemple, des points, des lignes, du texte et des polygones) et fournit la base de nombreuses fonctions add _ * () (par exemple, add_markers (), add_lines (), add_paths (), add_segments (), add_ribbons (), add_area () et add_polygons ()) ainsi que de nombreux graphiques ggplotly ().
+Ces couches, basées sur la dispersion, fournissent une interface plus pratique pour les cas particuliers du tracé de dispersion en effectuant un peu de tri et de transformation des données sous le capot avant de mapper sur le ou les tracés de dispersion. Pour un exemple simple, add_lines () garantit que les lignes sont dessinées selon l'ordre de x, ce qui est souhaitable pour un tracé de séries chronologiques. Ce comportement est légèrement différent de celui de add_paths () qui utilise l'ordre des lignes à la place.
+
+La différence entre add_paths () et add_lines (): le panneau supérieur relie les observations selon l'ordre de psavert (taux d'épargne personnelle), tandis que le panneau inférieur relie les observations selon l'ordre de x (la date).
+```{r ordre,message=FALSE}
+data(economics, package = "ggplot2")
+
+#On trie l'économie par psavert, juste pour montrer la différence entre les chemins et les lignes
+p <- economics %>%
+  arrange(psavert) %>%
+  plot_ly(x = ~date, y = ~psavert)
+
+add_paths(p)
+add_lines(p)
+```
+*#????????????????????????????????????????????????????*
+
+### Les marqueurs
+
+Ici, nous détaillerons les tracés de dispersion avec un mode de "marqueurs" (c'est-à-dire add_markers()).
+Par souci de simplicité, de nombreux exemples ici utilisent add_markers() avec un axe numérique x et y, ce qui donne un nuage de points.
+
+#### Mélange alpha
+
+Un problème courant avec les nuages de points est le sur-traçage, ce qui signifie qu'il y a plusieurs observations occupant les mêmes emplacements x / y (ou similaires). La figure ci-dessous montre une façon de lutter contre le sur-traçage via le mélange alpha.
+
+```{r mélange alpha,message=FALSE}
+
+
+
+subplot(
+  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
+  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
+    add_markers(alpha = 0.2, name = "alpha")
+)
+```
+
+#### Couleurs
+Mapper une variable discrète à la couleur produit un tracé par catégorie, ce qui est souhaitable pour ses propriétés de légende et de survol. D'autre part, le mappage d'une variable numérique à la couleur produit un tracé, ainsi qu'un guide de barre de couleurs pour décoder visuellement les couleurs en valeurs de données.
+La fonction colorbar () peut être utilisée pour personnaliser l'apparence de ce guide généré automatiquement.
+L'échelle de couleurs par défaut est viridis, une échelle de couleurs perceptuellement uniforme (même lorsqu'elle est convertie en noir et blanc), et perceptible même pour ceux qui ont des formes courantes de daltonisme (Berkeley Institute for Data Science 2016). Viridis est également l'échelle de couleurs par défaut pour les facteurs ordonnés.
+Ci-dessous les variations sur une cartographie numérique des couleurs:
+
+```{r couleurs,message=FALSE}
+p <- plot_ly(mpg, x = ~cty, y = ~hwy, alpha = 0.5)
+subplot(
+  add_markers(p, color = ~cyl, showlegend = FALSE) %>% 
+    colorbar(title = "Viridis"),
+  add_markers(p, color = ~factor(cyl))
+)
+```
+
+#### Symboles
+L'argument symbol peut être utilisé pour mapper des valeurs de données à l'attribut marker.symbol plotly.js. Il utilise la même sémantique que celle pour la couleur:
+    Un mappage numérique génère une trace.
+    Un mappage discret génère plusieurs traces (une trace par catégorie).
+    Le pluriel, symboles, peut être utilisé pour spécifier la plage visuelle      du mappage.
+Les mappages sont entièrement évités grâce à I ().
+Par exemple, le panneau gauche de la figure ci-dessous utilise un mappage numérique et le panneau droit utilise un mappage discret. Par conséquent, le panneau de gauche est lié à la première entrée de légende, tandis que le panneau de droite est lié aux trois entrées de légende du bas. Lorsque vous tracez plusieurs traces et qu'aucune couleur n'est spécifiée, le coloris plotly.js est appliqué (c'est-à-dire que chaque trace sera rendue avec une couleur différente). Pour définir une couleur fixe, vous pouvez définir la couleur de chaque trace générée à partir de ce calque avec color = I ("noir"), ou similaire.
+
+```{r symboles,message=FALSE}
+p <- plot_ly(mpg, x = ~cty, y = ~hwy, alpha = 0.3) 
+subplot(
+  add_markers(p, symbol = ~cyl, name = "A single trace"),
+  add_markers(p, symbol = ~factor(cyl), color = I("black"))
+)
+```
+
+#### Taille
+Pour les nuages de points, l'argument size contrôle la zone des marqueurs (sauf indication contraire via sizemode) et doit être une variable numérique. L'argument tailles contrôle la taille minimale et maximale des cercles, en pixels:
+
+```{r taille,message=FALSE}
+p <- plot_ly(mpg, x = ~cty, y = ~hwy, alpha = 0.3) 
+subplot(
+  add_markers(p, size = ~cyl, name = "default"),
+  add_markers(p, size = ~cyl, sizes = c(1, 500), name = "custom")
+)
+```
+
+Semblable à d'autres arguments, I () peut être utilisé pour spécifier directement la taille. Dans le cas des marqueurs, la taille contrôle l'attribut marker.size plotly.js. On a toujours la possibilité de définir cet attribut directement en faisant quelque chose de similaire à la figure précédente:
+```{r taille suite,message=FALSE}
+plot_ly(mpg, x = ~cty, y = ~hwy, alpha = 0.3, size = I(30))
+```
+
+#### Dotplots et barres d'erreur
+Un dotplot est similaire à un nuage de points, sauf qu'au lieu de deux axes numériques, l'un est catégorique.
+L'objectif habituel d'un dotplot est de comparer des valeurs sur une échelle numérique sur de nombreuses catégories. Dans ce contexte, les diagrammes à points sont préférables aux diagrammes à secteurs car il est beaucoup plus facile de comparer la position le long d'une échelle commune que de comparer l'angle ou l'aire. En outre, les diagrammes à points peuvent être préférables aux graphiques à barres, en particulier lors de la comparaison de valeurs dans une plage étroite éloignée de 0. De plus, lors de la présentation d'estimations ponctuelles et de l'incertitude associée à ces estimations, les graphiques à barres ont tendance à exagérer la différence des estimations ponctuelles et à perdre de vue l'incertitude.
+
+Une application courante pour les diagrammes à points (avec des barres d'erreur) est ce que l'on appelle le «diagramme de coefficients» pour visualiser les estimations ponctuelles des coefficients et leur erreur standard. La fonction coefplot () dans le package coefplot et la fonction ggcoef () dans le GGally produisent toutes deux des tracés de coefficients pour de nombreux types d'objets de modèle dans R en utilisant ggplot2, que nous pouvons traduire par tracé via ggplotly (). Étant donné que ces packages utilisent des points et des segments pour dessiner les tracés de coefficients, les informations de survol ne sont pas les meilleures et il vaudrait mieux utiliser des objets d'erreur. La figure suivante utilise la fonction tidy () du package broom pour obtenir une base de données avec une ligne par coefficient de modèle et produire un diagramme de coefficient avec des barres d'erreur le long de l'axe des x.
+
+```{r barre,message=FALSE}
+# On ajuste un modèle linéaire factoriel complet
+m <- lm(
+  Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width, 
+  data = iris
+)
+
+# 1: obtenir une structure de données tidy () d'informations au niveau des covariables 
+# 2: s'assurer que la colonne des termes est un facteur ordonné par l'estimation
+# 3: tracer l'estimation par terme avec une barre d'erreur pour l'erreur standard
+broom::tidy(m) %>% 
+  mutate(term = forcats::fct_reorder(term, estimate)) %>%
+  plot_ly(x = ~estimate, y = ~term) %>%
+  add_markers(
+    error_x = ~list(value = std.error), 
+    color = I("black"),
+    hoverinfo = "x"
+  )
+```
+
+
+### Les lignes
+Nous allons découvrir le type de ligne / type de ligne, une esthétique qui s'applique aux lignes et aux polygones. Nous aborderons également d'autres types de graphiques importants qui peuvent être mis en œuvre avec add_paths (), add_lines () et add_segments ().
+
+#### Les types de lignes
+De manière générale, il est difficile de percevoir plus de 8 couleurs / types de ligne / symboles différents dans un tracé donné. Nous devons donc parfois filtrer les données pour les utiliser efficacement.
+Ici, nous utilisons le package dplyr pour trouver les 5 meilleures villes en termes de ventes mensuelles moyennes (top5), puis filtrons efficacement les données d'origine pour ne contenir que ces villes via semi_join (). Comme le montre la figure ci-dessous, une fois que nous avons filtré les données, mapper la ville à la couleur ou au type de ligne est trivial. La palette de couleurs peut être modifiée via l'argument couleurs et suit les mêmes règles que les nuages de points. La palette des types de ligne peut être modifiée via l’argument types de ligne et accepte les valeurs de lty de R ou les valeurs de tiret plotly.js.
+Utilisation de la couleur et / ou du type de ligne pour différencier des groupes de lignes:
+```{r type de ligne,message=FALSE}
+
+top5 <- txhousing %>%
+  group_by(city) %>%
+  summarise(m = mean(sales, na.rm = TRUE)) %>%
+  arrange(desc(m)) %>%
+  top_n(5)
+
+tx5 <- semi_join(txhousing, top5, by = "city")
+
+plot_ly(tx5, x = ~date, y = ~median) %>%
+  add_lines(linetype = ~city)
+```
+
+#### Les segments
+La fonction add_segments () fournit essentiellement un moyen de relier deux points [(x, y) à (xend, yend)] avec une ligne. Les segments forment les blocs de construction de nombreux types de graphiques utiles, notamment les slopégraphes, les graphiques en haltères, les graphiques en chandeliers, etc. Les slopégraphes et les graphiques en haltères sont utiles pour comparer des valeurs numériques dans de nombreuses catégories. Les graphiques en chandeliers sont généralement utilisés pour visualiser les changements d'un actif financier au fil du temps.
+
+##### Graphiques Dumbell
+Les graphiques dits dumbell sont similaires dans leur concept aux graphiques de pente, mais pas aussi généraux. Ils sont généralement utilisés pour comparer deux classes différentes de valeurs numériques dans de nombreux groupes. La figure suivante utilise l'approche dumbell pour montrer la moyenne des miles par gallon ville et autoroute pour différents modèles de voitures. Avec un graphique en haltères, il est toujours judicieux de classer les catégories par une métrique raisonnable - pour la figure, les catégories sont classées par ville en miles par gallon
+
+```{r dumbell,message=FALSE}
+mpg %>%
+  group_by(model) %>%
+  summarise(c = mean(cty), h = mean(hwy)) %>%
+  mutate(model = forcats::fct_reorder(model, c)) %>%
+  plot_ly() %>%
+  add_segments(
+    x = ~c, y = ~model,
+    xend = ~h, yend = ~model, 
+    color = I("gray"), showlegend = FALSE
+  ) %>%
+  add_markers(
+    x = ~c, y = ~model, 
+    color = I("blue"), 
+    name = "mpg city"
+  ) %>%
+  add_markers(
+    x = ~h, y = ~model, 
+    color = I("red"),
+    name  = "mpg highway"
+  ) %>%
+  layout(xaxis = list(title = "Miles per gallon"))
+```
+
+
+#### Diagrammes de densité
+Nous pouvons exploiter la fonction densité () pour calculer les estimations de densité du noyau, et acheminer les résultats vers add_lines (), comme le montre la figure suivante:
+
+```{r densité,message=FALSE}
+kerns <- c("gaussian", "epanechnikov", "rectangular", 
+          "triangular", "biweight", "cosine", "optcosine")
+p <- plot_ly()
+for (k in kerns) {
+  d <- density(economics$pce, kernel = k, na.rm = TRUE)
+  p <- add_lines(p, x = d$x, y = d$y, name = k)
+}
+p
+```
+
+
+### Les polygones
+Les polygones peuvent être utilisés pour dessiner beaucoup de choses, mais peut-être l'application la plus familière est de dessiner des objets géospatiaux. 
+Quand on utilise add_polygons () pour dessiner une carte, il faut s'assurez de corriger le rapport hauteur / largeur (par exemple, xaxis.scaleanchor) et envisagez également d'utiliser plotly_empty () sur plot_ly () pour masquer les étiquettes des axes, les graduations et la grille d'arrière-plan.
+
+```{r polygone,message=FALSE}
+base <- map_data("world", "canada") %>%
+  group_by(group) %>%
+  plotly_empty(x = ~long, y = ~lat, alpha = 0.2) %>%
+  layout(showlegend = FALSE, xaxis = list(scaleanchor = "y"))
+  
+base %>%
+  add_polygons(hoverinfo = "none", color = I("black")) %>%
+  add_markers(text = ~paste(name, "<br />", pop), hoverinfo = "text", 
+              color = I("red"), data = maps::canada.cities)
+```
+???????????????????????????????????????????
+
+
+
+## Graphique linéaire
+
+### Graphique basique
+
+```{r graphlineaire, message=FALSE}
+
+#Préparation des données
+
+jour <- c (1:30)
+nombre_ordre <- rnorm (30, mean = 3)
+df <- data.frame (jour, nombre_ordre)
+
+#Data visualisation
+
+fig <- plot_ly (df, x = ~ jour, y = ~ nombre_ordre, type = 'scatter', mode = 'lines')
+
+fig <- fig%>% layout (title = 'Nombre de commandes quotidiennes dans un mois', 
+                       yaxis = list (title = 'Nombre dordre'), 
+                       xaxis = list (title = '1 mois'))
+fig
+
+```
+type=’scatter’ : Ce type de graphique se nomme scatter
+
+x = : Valeurs des abscisses
+
+y = : Valeurs des ordonnées
+
+mode = : Type de liaison entre les points. les champs possibles : "lines", "markers", "text"
+
+
+
+## Diagramme à barres
+
+### Introduction
+
+Les fonctions add_bars () et add_histogram () encapsulent les types de trace bar et histogramme plotly.js. La principale différence entre eux est que les traces de barres nécessitent des hauteurs de barre (à la fois x et y), alors que les traces d'histogramme ne nécessitent qu'une seule variable, et plotly.js gère la différence dans le navigateur. Ces deux fonctions peuvent être utilisées pour visualiser la distribution d'une variable numérique ou discrète. Donc, essentiellement, la seule différence entre eux est l'endroit où le regroupement se produit.
+
+La figure ci-dessous compare l'algorithme de regroupement par défaut de plotly.js à quelques algorithmes différents disponibles dans R via la fonction hist(). Bien que plotly.js ait la capacité de personnaliser les bins d'histogramme via xbins / ybins, R dispose de diverses fonctionnalités pour estimer le nombre optimal de bins dans un histogramme que nous pouvons facilement exploiter. La fonction hist () à elle seule nous permet de référencer 3 algorithmes célèbres par nom (Sturges 1926; Freedman et Diaconis 1981; Scott 1979), mais il existe également des packages (par exemple le package d'histogrammes) qui étendent cette interface pour incorporer plus de méthodologie. La fonction price_hist () ci-dessous encapsule la fonction hist () pour obtenir les résultats du binning, et mappe ces bins à une version tracée de l'histogramme en utilisant add_bars ().
+
+``` {r introhistogramme, message=FALSE} 
+p1 <- plot_ly(diamonds, x = ~price) %>%
+  add_histogram(name = "plotly.js")
+
+price_hist <- function(method = "FD") {
+  h <- hist(diamonds$price, breaks = method, plot = FALSE)
+  plot_ly(x = h$mids, y = h$counts) %>% add_bars(name = method)
+}
+
+subplot(
+  p1, price_hist(), price_hist("Sturges"),  price_hist("Scott"),
+  nrows = 4, shareX = TRUE
+)
+```
+
+
+La figure ci-dessous montre deux façons de créer un graphique à barres de base. Bien que les résultats visuels soient les mêmes, il convient de noter la différence de mise en œuvre. La fonction add_histogram () envoie toutes les valeurs observées au navigateur et laisse plotly.js effectuer le binning (=regroupement). Il faut plus d'efforts humains pour effectuer le regroupement dans R, mais cela présente l'avantage d'envoyer moins de données et de nécessiter moins de travail de calcul du navigateur. Dans ce cas, nous n'avons qu'environ 50 000 enregistrements, il n'y a donc pas beaucoup de différence dans les temps de chargement ou la taille de la page. Cependant, avec 1 million d'enregistrements, le temps de chargement de la page fait plus que doubler et la taille de la page double presque.
+
+```{r comparaison graphique à barres, message=FALSE} 
+
+graphique1 <- plot_ly(diamonds, x = ~cut) %>%
+  add_histogram()
+
+graphique2 <- diamonds %>%
+  count(cut) %>%
+  plot_ly(x = ~cut, y = ~n) %>% 
+  add_bars()
+
+subplot(graphique1, graphique2) %>% hide_legend()
+```
+
+On obtient ci-dessus le nombre de diamant par "coupe".
+
+
+### Distributions numériques multiples
+
+Il est souvent utile de voir comment la distribution numérique change par rapport à une variable discrète. Lorsqu'on utilise des barres pour visualiser plusieurs distributions numériques, il est recommandé de tracer chaque distribution sur son propre axe en utilisant un petit affichage multiple, plutôt que d'essayer de les superposer sur un seul axe.
+Nous observerons ci-dessous comment la fonction one_plot () définit ce qu'il faut afficher sur chaque panneau, puis une stratégie split-apply-recombine (c.-à-d., Split (), lapply (), subplot ()) est utilisée pour générer l'affichage en treillis.
+
+```{r fonction one_plot, message=FALSE} 
+one_plot <- function(d) {
+  plot_ly(d, x = ~price) %>%
+    add_annotations(
+      ~unique(clarity), x = 0.5, y = 1, 
+      xref = "paper", yref = "paper", showarrow = FALSE
+    )
+}
+
+diamonds %>%
+  split(.$clarity) %>%
+  lapply(one_plot) %>% 
+  subplot(nrows = 2, shareX = TRUE, titleX = FALSE) %>%
+  hide_legend()
+```
+
+
+### Distributions discrètes multiples
+La visualisation de plusieurs distributions discrètes est difficile. La complexité subtile est due au fait que les nombres et les proportions sont importants pour comprendre les distributions discrètes multi-variées. La figure ci-dessous présente le nombre de diamants, divisé par leur taille et leur clarté, à l'aide d'un graphique à barres groupées.
+```{r distribution discrète, message=FALSE}
+plot_ly(diamonds, x = ~cut, color = ~clarity) %>% 
+  add_histogram()
+```
+
+La figure ci-dessus est utile pour comparer le nombre de diamants par clarté, étant donné un type de taille. Par exemple, dans les diamants «Idéal», une coupe de «VS1» est la plus populaire, «VS2» est la deuxième plus populaire et «I1» la moins populaire. La distribution de la clarté dans les diamants «idéaux» semble être assez similaire à celle des autres diamants, mais il est difficile de faire cette comparaison en utilisant des chiffres bruts.
+La figure ci-dessous facilite cette comparaison en montrant la fréquence relative des diamants par clarté, compte tenu d'une taille.
+
+```{r graphique à barres empilées montrant la proportion de clarté du diamant dans la coupe, message=FALSE}
+#nombre par coupe et clarté (n)
+cc <- count(diamonds, cut, clarity)
+#nombre par coupe (nn)
+cc2 <- left_join(cc, count(cc, cut, wt = n, name = 'nn'))
+cc2 %>%
+  mutate(prop = n / nn) %>%
+  plot_ly(x = ~cut, y = ~prop, color = ~clarity) %>%
+  add_bars() %>%
+  layout(barmode = "stack")
+```
+
+Ce type de parcelle, également connu sous le nom de parcelle de colonne vertébrale, est un cas particulier de parcelle en mosaïque. Dans un diagramme en mosaïque, on peut mettre à l'échelle les largeurs et les hauteurs des barres selon des distributions discrètes. Pour les graphiques en mosaïque, il est recommandé d'utiliser le package ggmosaic, qui implémente un ggplot2 geom personnalisé conçu pour les graphiques en mosaïque, que nous pouvons convertir en parcelles via ggplotly (). 
+La figure ci-dessous montre un diagramme en mosaïque de coupe par clarté. On remarquera comment les largeurs de barre sont mises à l'échelle proportionnellement à la fréquence de coupure.
+
+```{r mosaïque, message=FALSE}
+
+p <- ggplot(data = cc) +
+  geom_mosaic(aes(weight = n, x = product(cut), fill = clarity))
+ggplotly(p)
+```
+Ici, on a utilisé ggmosaic et ggplotly () pour créer des visualisations interactives avancées de données catégorielles.
+
+
+
+## Diagramme camembert
+
+Le diagramme cammebert va permettre de représenter un petit nombre de valeurs par des angles proportionnels à la fréquence de ces valeurs.
+
+```{r camembert, message=FALSE}
+
+#Préparation des données
+labels = c ('Marron', 'Noir', 'Noisette', 'Vert','Bleu','Gris') 
+values = c (132, 12, 24, 24, 96, 12) 
+colors = c('rgb(88,41,0)', 'rgb(0,0,0)', 'rgb(149,86,40)', 'rgb(58,203,81)', 'rgb(96,196,213)', 'rgb(220,220,220)')
+
+# Data Visualization
+fig <- plot_ly(type='pie', 
+               labels=labels, 
+               values=values, 
+               textinfo='label+percent',
+               insidetextorientation='radial',
+               marker = list(colors = colors,line = list(color = '#FFFFFF', width = 1)),)
+
+fig <- fig %>% layout(title = "Couleur des yeux")
+
+fig
+
+```
+
+type=’pie’ : Ce type de ce graphique se nomme pie
+
+labels = : Variable de facteur
+
+values = : Valeurs numériques
+
+textinfo = : Détermine quelles informations apparaissent sur le graphique. Touts les combinaison sont possibles comme "label", "text", "value", "percent"
+
+insidetextorientation = : Gére l'orientation du texte à l'intérieur des secteurs du graphique. les champs possibles : "horizontal", "radial", "tangential" ,"auto"
+
+marker = : définir une couleur pour chaque secteur
+
+
+
+## Boite à moustache 
+
+La boîte à moustaches est un moyen rapide de figurer le profil essentiel d'une série statistique quantitative. Ce diagramme résume quelques indicateurs de position du caractère étudié comme la médiane, les quartiles, le minimum, le maximum ou encores les déciles. Ce diagramme est utilisé principalement pour comparer un même caractère dans deux populations de tailles différentes.
+
+```{r moustache1, message=FALSE}
+
+fig <- plot_ly(y = list(1,2,3,4,5), type = "box")
+
+fig
+
+```
+
+y : les variables
+
+type=’box’ : Ce type de ce graphique se nomme box
+
+```{r moustache2, message=FALSE}
+
+fig <- plot_ly(y = list(1,2,3,4,5), type = "box", quartilemethod="linear", name="Linéaire")
+fig <- fig %>% add_trace(y = list(1,2,3,4,5), quartilemethod="inclusive", name="Inclusive")
+fig <- fig %>% add_trace(y = list(1,2,3,4,5), quartilemethod="exclusive", name="Exclusive")
+fig <- fig %>% layout(title = "Les différents méthodes de calcul des quartiles")
+
+fig
+
+```
+
+quartilemethod = : Variable de facteur
+
+- Par défaut, les quartiles des boîtes à moustaches sont calculés à l'aide de la méthode linéaire (l’interpolation linéaire est la méthode la plus simple pour estimer la valeur prise par une fonction continue entre deux points déterminés (interpolation). Elle consiste à utiliser pour cela la fonction affine (de la forme f(x) = a.x + b) passant par les deux points déterminés.)
+
+Mais il y a deux autres méthodes de calcules.
+
+- L' algorithme exclusif utilise la médiane pour diviser l'ensemble de données ordonné en deux moitiés. Si l'échantillon est impair, il n'inclut pas la médiane dans l'une ou l'autre moitié. Q1 est alors la médiane de la moitié inférieure et Q3 est la médiane de la moitié supérieure.
+
+- L' algorithme inclusif utilise également la médiane pour diviser l'ensemble de données ordonné en deux moitiés, mais si l'échantillon est impair, il inclut la médiane dans les deux moitiés. Q1 est alors la médiane de la moitié inférieure et Q3 la médiane de la moitié supérieure.
+
+
+
+## Cartes
+
+## Les cartes
+Il existe de nombreuses façons de créer une carte avec intrigue, chacune avec ses propres forces et faiblesses. D'une manière générale, les approches relèvent de deux catégories: intégrées ou personnalisées. Les cartes intégrées tirent parti de la prise en charge intégrée de plotly.js pour le rendu d'une couche de fond de carte. Actuellement, il existe deux méthodes prises en charge pour créer des cartes intégrées: soit via Mapbox, soit via un fond de carte intégré alimenté par d3.js. L'approche intégrée est pratique si vous avez besoin d'une carte rapide et n'avez pas nécessairement besoin de représentations sophistiquées d'objets géospatiaux. En revanche, l’approche de cartographie personnalisée offre un contrôle complet puisque vous fournissez toutes les informations nécessaires pour rendre le ou les objets géospatiaux. 
+
+Il convient de noter que plotly vise à être une bibliothèque de visualisation à usage général et ne vise donc pas à être la boîte à outils de visualisation géospatiale la plus complète. Cela dit, il y a des avantages à utiliser des cartes basées sur l'intrigue car les API de cartographie sont très similaires au reste de l'intrigue, et vous pouvez tirer parti d'un écosystème de parcelle plus large. Cependant, si vous rencontrez des limitations avec la fonctionnalité de cartographie de plotly, il existe un ensemble très riche d'outils pour la visualisation géospatiale interactive dans R, y compris, mais sans s'y limiter: dépliant, mapview, mapedit, tmap et mapdeck.
+
+### Intégration des cartes
+#### Introduction
+Si on dispose de données de latitude / longitude assez simples et que vous souhaitez créer une carte rapide, on peut essayer l’une des options de cartographie intégrées de plotly (par exemple, plot_mapbox () et plot_geo ()). De manière générale, on peut traiter ces fonctions de constructeur comme un remplacement de plot_ly () et obtenir un fond de carte dynamique rendu derrière vos données. De plus, toutes les couches basées sur des nuages de points fonctionnent avec plot_ly () .Par exemple, la figure suivante utilise plot_mapbox () et add_markers () pour créer un graphique à bulles:
+
+```{r carte introduction,message=FALSE}
+#C'est ici que ça bloque
+Sys.setenv(MAPBOX_TOKEN = 11122223333444)
+plot_mapbox(maps::canada.cities) %>%
+  add_markers(
+    x = ~long, 
+    y = ~lat, 
+    size = ~pop, 
+    color = ~country.etc,
+    colors = "Accent",
+    text = ~paste(name, pop),
+    hoverinfo = "text"
+  )
+```
+
+La figure suivante montre le fond de carte d'imagerie terrestre par satellite:
+```{r carte satellite,message=FALSE}
+styles <- schema()$layout$layoutAttributes$mapbox$style$values
+styles
+#>  [1] "basic"             "streets"          
+#>  [3] "outdoors"          "light"            
+#>  [5] "dark"              "satellite"        
+#>  [7] "satellite-streets" "open-street-map"  
+#>  [9] "white-bg"          "carto-positron"   
+#> [11] "carto-darkmatter"  "stamen-terrain"   
+#> [13] "stamen-toner"      "stamen-watercolor"
+layout(
+  plot_mapbox(), 
+  mapbox = list(style = "satellite")
+)
+```
+```{r carte test,message=FALSE}
+style_buttons <- lapply(styles, function(s) {
+  list(
+    label = s, 
+    method = "relayout", 
+    args = list("mapbox.style", s)
+  )
+})
+layout(
+  plot_mapbox(), 
+  mapbox = list(style = "dark"),
+  updatemenus = list(
+    list(y = 0.8, buttons = style_buttons)
+  )
+)
+```
+
+
+
+## 3D
+
+### Les marqueurs
+En ajoutant simplement un attribut z, plot_ly () saura comment rendre les marqueurs, les lignes et les chemins en trois dimensions. 
+Cela signifie que toutes les techniques que nous avons apprises dans la partie Nuages de points peuvent être réutilisées pour les graphiques 3D:
+
+```{r graphique 3D marqueurs,message=FALSE}
+plot_ly(mpg, x = ~cty, y = ~hwy, z = ~cyl) %>%
+  add_markers(color = ~cyl)
+```
+
+
+### Les chemins
+Pour créer un chemin en 3D, on utilise add_paths () de la même manière qu'on le fait pour un chemin 2D, mais on ajoute une troisième variable z.
+Démonstration:
+```{r chemin 3D,message=FALSE}
+plot_ly(mpg, x = ~cty, y = ~hwy, z = ~cyl) %>%
+  add_paths(color = ~displ)
+```
+
+
+### Les lignes
+La figure suivante utilise add_lines () au lieu de add_paths () pour s'assurer que les points sont connectés par l'axe x au lieu de l'ordre des lignes:
+```{r lignes 3D,message=FALSE}
+plot_ly(mpg, x = ~cty, y = ~hwy, z = ~cyl) %>%
+  add_lines(color = ~displ)
+```
+
+Comme pour les lignes non 3D, on peut créer plusieurs lignes en spécifiant une variable de regroupement, ici cyl:
+
+```{r chemin regroupement 3D,message=FALSE}
+plot_ly(mpg, x = ~cty, y = ~hwy, z = ~cyl) %>%
+  group_by(cyl) %>%
+  add_lines(color = ~displ)
+```
+
+
+### Les axes
+Pour les tracés 3D, les objets d'axe font partie de la définition de la scène, qui fait partie de la présentation (). Autrement dit, si on veut définir les titres des axes ou quelque chose d'autre spécifique à la définition de l'axe, la relation entre les axes (c'est-à-dire le rapport d'aspect) ou le réglage par défaut de la caméra (c'est-à-dire, la caméra); se fera via la scène:
+```{r axes 3D,message=FALSE}
+plot_ly(mpg, x = ~cty, y = ~hwy, z = ~cyl) %>%
+  add_lines(color = ~displ) %>%
+  layout(
+    scene = list(
+      xaxis = list(title = "MPG city"),
+      yaxis = list(title = "MPG highway"),
+      zaxis = list(title = "Number of cylinders")
+    )
+  )
+```
+
+
+### Les surfaces
+Créer des surfaces 3D avec add_surface () est un peu comme créer des cartes thermiques avec add_heatmap (). On peut même créer des surfaces 3D sur x / y catégoriques.
+Cela étant dit, il devrait y avoir un ordre sensé des axes x / y dans un tracé de surface car plotly.js interpole les valeurs z. Habituellement, la surface 3D se trouve sur une région continue, comme le montre la figure suivante pour afficher la hauteur d'un volcan. Si une matrice numérique est fournie à z comme dans la figure, les attributs x et y ne doivent pas être fournis, mais s'ils le sont, la longueur de x doit correspondre au nombre de colonnes de la matrice et y doit correspondre au nombre de Lignes.
+
+```{r surfaces 3D,message=FALSE}
+x <- seq_len(nrow(volcano)) + 100
+y <- seq_len(ncol(volcano)) + 500
+plot_ly() %>% add_surface(x = ~x, y = ~y, z = ~volcano)
+```
+
+
+
+
+# Publication de visuels
+
+
+
+## Publier en HTML
+
+Tout widget réalisé à partir d'un package htmlwidgets (par exemple, plotly, leaflet, DT, etc.) peut être enregistré sous forme de fichier HTML autonome via la fonction htmlwidgets::saveWidget(). Par défaut, il produit un fichier HTML complètement autonome, ce qui signifie que tous les fichiers de dépendance JavaScript et CSS nécessaires sont regroupés à l'intérieur du fichier HTML. Il est donc très facile de partager un widget sous la forme d'un seul fichier HTML. 
+
+```{r html, message=FALSE}
+
+p <- plot_ly(x = 1:10, y = 1:10) %>% add_markers()
+widget_file_size <- function(p) {
+  d <- tempdir()
+  withr::with_dir(d, htmlwidgets::saveWidget(p, "pltoly.html"))
+  f <- file.path(d, "plotly.html")
+  mb <- round(file.info(f)$size / 1e6, 3)
+  message("File is: ", mb," MB")
+}
+
+```
+
+
+
+## Exporter en image statique
+
+```{r image, message=FALSE}
+
+
+```
+
+
+
+
+# Animation et organisation de visuels
+
+
+
+## Organisation des vues
+Une technique essentielle à la visualisation de données en haute dimension est la possibilité d'organiser plusieurs vues. En organisant plusieurs graphiques à faible dimension des mêmes données (ou similaires) à haute dimension, on peut placer des résumés et des modèles locaux dans un contexte global.
+Lorsqu'on organise plusieurs objets tracés, on dispose d'une certaine flexibilité quant à la façon dont on les organise: on peut utiliser subplot () pour fusionner plusieurs objets tracés en un seul objet (utile pour synchroniser les événements de zoom et de panoramique sur plusieurs axes), les placer dans des balises HTML séparées (nous le verrons plus bas), ou intégrer dans un système plus grand pour gérer intelligemment de nombreuses vues (nous le verrons plus bas).
+
+### Organisation des objets de tracé
+
+la fonction subplot () fournit une interface flexible pour fusionner plusieurs objets tracés en un seul objet. Il est plus flexible que la plupart des cadres d’affichage en treillis (comme facet_wrap () de ggplot2) car nous n'avons pas à conditionner une valeur de variable commune dans chaque affichage.
+Ses capacités et son interface sont similaires à la fonction grid.arrange () du package gridExtra, qui vous permet d'organiser plusieurs grobs (=objet graphique de grille) de grille dans une seule vue, offrant ainsi un moyen d'organiser (éventuellement sans lien) ggplot2 et / ou des tracés en treillis dans un vue unique.
+La figure suivante montre la manière la plus simple d'utiliser subplot () qui consiste à fournir directement des objets tracés:
+
+```{r organisation tracés,message=FALSE}
+p1 <- plot_ly(economics, x = ~date, y = ~unemploy) %>% 
+  add_lines(name = "unemploy")
+p2 <- plot_ly(economics, x = ~date, y = ~uempmed) %>% 
+  add_lines(name = "uempmed")
+subplot(p1, p2)
+```
+
+Bien que subplot () accepte un nombre arbitraire d'objets de tracé, le fait de transmettre une liste de tracés peut économiser le typage et le code redondant lors du traitement d'un grand nombre de tracés.
+La figure suivante montre une série chronologique pour chaque variable de l'ensemble de données économiques et partage l'axe des x afin que les événements de zoom / panoramique soient synchronisés sur chaque série:
+
+```{r organisation tracés chrono,message=FALSE}
+vars <- setdiff(names(economics), "date")
+plots <- lapply(vars, function(var) {
+  plot_ly(economics, x = ~date, y = as.formula(paste0("~", var))) %>%
+    add_lines(name = var)
+})
+subplot(plots, nrows = length(plots), shareX = TRUE, titleX = FALSE)
+```
+
+### Graphiques récursifs
+
+La fonction subplot () renvoie un objet tracé afin qu'il puisse être modifié comme n'importe quel autre objet tracé. Cela signifie effectivement que les sous-graphiques fonctionnent de manière récursive (c'est-à-dire qu'on peut avoir des sous-graphiques dans les sous-graphiques).
+Cette idée est utile lorsque la mise en page souhaitée n'est pas conforme à la structure du tableau décrite dans la section précédente. On peut penser à un sous-tracé de sous-tracés comme une feuille de calcul avec des cellules fusionnées.
+La figure suivante donne un exemple de base où chaque ligne du sous-graphique le plus à l'extérieur contient un nombre différent de colonnes:
+
+```{r sous graphique,message=FALSE}
+plotList <- function(nplots) {
+  lapply(seq_len(nplots), function(x) plot_ly())
+}
+s1 <- subplot(plotList(6), nrows = 2, shareX = TRUE, shareY = TRUE)
+s2 <- subplot(plotList(2), shareY = TRUE)
+subplot(
+  s1, s2, plot_ly(), nrows = 3, 
+  margin = 0.04, heights = c(0.6, 0.3, 0.1)
+)
+```
+
+Le concept est particulièrement utile lorsqu'on souhaite que les tracés d'une ligne donnée aient des largeurs différentes de celles des tracés d'une autre ligne.
+La figure suivante utilise ce comportement récursif pour placer de nombreux histogrammes dans la première ligne et un seul choroplèthe dans la deuxième ligne:
+
+```{r carte choroplèthe,message=FALSE}
+#On spécifie des projections / options de carte
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  lakecolor = toRGB('white')
+)
+
+#On crée une carte de la densité de population
+density <- state.x77[, "Population"] / state.x77[, "Area"]
+map <- plot_geo(
+  z = ~density, text = state.name, 
+  locations = state.abb, locationmode = 'USA-states'
+) %>%
+  
+  layout(geo = g)
+#On crée un tas de graphiques à barres horizontales 
+vars <- colnames(state.x77)
+barcharts <- lapply(vars, function(var) {
+  plot_ly(x = state.x77[, var], y = state.name) %>%
+    add_bars(orientation = "h", name = var) %>%
+    layout(showlegend = FALSE, hovermode = "y",
+           yaxis = list(showticklabels = FALSE))
+})
+
+subplot(barcharts, margin = 0.01) %>%
+  subplot(map, nrows = 2, heights = c(0.3, 0.7), margin = 0.1) %>%
+  layout(legend = list(y = 1)) %>%
+  colorbar(y = 0.5)
+```
+
+
+### Organisation des widgets HTML
+
+Étant donné que les objets tracés sont également des widgets HTML, toute méthode qui fonctionne pour organiser les widgets HTML fonctionne également pour les objets tracés. De plus, comme les htmlwidgets. sont également des balises htmltools, toute méthode qui fonctionne pour organiser les balises htmltools fonctionne également pour les htmlwidgets. Voici trois façons courantes d'organiser les composants dans une seule page Web:
+
+1: Flexdashboard: un package R pour organiser les composants dans une disposition de tableau de bord avisée. Ce package est essentiellement un modèle rmarkdown spécial qui utilise une syntaxe de balisage simple pour définir la mise en page.
+2: Disposition de grille de Bootstrap: les packages de diaphonie et brillant fournissent des moyens d'organiser de nombreux composants via le système de disposition de grille de Bootstrap (un framework HTML / CSS populaire).
+3: CSS flexbox: Si vous connaissez du HTML et du CSS, vous pouvez utiliser CSS flexbox pour organiser les composants via le package htmltools.
+
+Bien que flexdashboard soit un très bon moyen d'organiser le contenu Web généré à partir de R, il peut être avantageux de connaître les deux autres approches car leurs techniques d'agencement sont indépendantes d'un format de sortie rmarkdown. En d'autres termes, les approches 2 et 3 peuvent être utilisées avec n'importe quel modèle rmarkdown21 ou n'importe quel framework pour la génération de site Web.
+Bien que le système de mise en page de grille Bootstrap (2) soit expressif et intuitif, son utilisation dans un site Web plus grand qui utilise également un autre cadre HTML / CSS (par exemple, Bulma, Skeleton, etc.) peut causer des problèmes. Dans ce cas, CSS flexbox (3) est une alternative légère (c'est-à-dire sans dépendances CSS / JS externes) qui est moins susceptible d'introduire des effets secondaires indésirables.
+
+
+
+
+# V - Références
+https://plotly-r.com
+https://cran.r-project.org/web/packages/plotly/plotly.pdf
