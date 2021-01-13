@@ -1,4 +1,6 @@
 # PSBX
-Voici une documentation sur le package Plotly utilisé sur R.
-Vous y trouverez le code rmd.
-Nous n'avons pas mis de PDF car nos graphiques sont tous dynamiques et PDF ne permet pas de garder ce dynasmisme.
+API-web-avec-Plumber: documentation sur le package R Plumber
+Approche mathématiques - Émojis: étude et compréhension d'une formule mathématiques issue d'une thèse
+Documenation Statsmodels: documentaiton sur le module Python Statsmodels
+JANITOR DOCUMENTATION: documentation sur le package R Janitor
+Plotly: documentation sur la data visualisation sur R
