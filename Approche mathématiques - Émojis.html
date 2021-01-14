@@ -13159,15 +13159,10 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>On appelle distance de Levenshtein entre deux mots M et P le coût minimal pour transformer M en P en effectuant les seules opérations élémentaires suivantes :</p>
-<ul>
-<li>substitution d'un caractère de M par un caractère différent de P ;</li>
-<li>insertion (ou ajout) dans M d'un caractère de P ;</li>
-<li>suppression (ou effacement) d'un caractère de M.</li>
-</ul>
-<p><br/><br/>
+<p>La distance de Levenshtein mesure le degré de similarité entre deux chaînes de caractères. Elle est égale au nombre minimal de caractères qu’il faut supprimer, insérer ou remplacer pour passer d’une chaîne à l’autre. C’est une distance au sens mathématique du terme, donc en particulier c’est un nombre positif ou nul, et deux chaînes sont identiques si et seulement si leur distance est nulle.</p>
+<p><br/>
 Pour illustrer ce constat, prenons pour exemple un lexique témoin avec le terme "fun" lié à l’emoji "bonhomme qui sourit" et le terme "gun" lié à l’emoji "pistolet". <br/></p>
-<p>Si l’on se réfère à l’algorithme initial de Levenshtein, la distance entre les deux chaînes de caractères est égale à 1 par simple substitution du premier caractère "f" en "g". Cela nous donne ainsi une prédiction de l’emoji   pour le terme "fun", ce qui est loin du résultat escompté. <br/></p>
+<p>Si l’on se réfère à l’algorithme initial de Levenshtein, la distance entre les deux chaînes de caractères est égale à 1 par simple substitution du premier caractère "f" en "g". Cela nous donne ainsi une prédiction de l’emoji "pistolet" pour le terme "fun", ce qui est loin du résultat escompté. <br/></p>
 <p>C’est pour cette raison que nous avons décidé de modifier la valeur de la fonction de coût de substitution (<em>a</em><sub>i</sub> ≠ <em>b</em><sub>j</sub> ) = 1, en l’augmentant à 2, voire à 3, de telle sorte que la substitution devienne <sub>i</sub> ≠ <em>b</em><sub>j</sub> ) = 2. <br/></p>
 <p>En effet, lors de la comparaison du mot prédit par les HMM <em>(section qu'on n'étudiera pas ici mais que vous pourrez retrouver dans la première source)</em> et le lexique de mots et d’emojis, nous imposons une limite stricte en permettant au lexique d’être utilisé uniquement en cas de différence minime entre un élément du vocabulaire et le mot prédit, c’est-à-dire une distance d’édition de 1. <br/></p>
 <p>De cette manière nous évitons l’un des principaux inconvénients de l’utilisation d’un lexique qui est présent dans les modèles de prédictions d’emojis existants : la prédiction prématurée d’emojis non pertinents. En effet, cet inconvénient est réduit par l’apport de l’auto-complétion des mots effectuée en amont, et qui <strong>permet alors de prédire plus efficacement un emoji pour un mot en cours d’écriture en prenant en compte le contexte précédent</strong>. <br/></p>
@@ -13467,6 +13462,41 @@ Elle est en anglais ;)</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Limites-de-la-distance-de-Levenshtein">Limites de la distance de Levenshtein<a class="anchor-link" href="#Limites-de-la-distance-de-Levenshtein">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pour ma part, je trouve que cette formule, bien qu'elle soit très intéressante, a ses limites. En effet, la recommandation automatique et adaptative d’emojis se basent sur la prédiction de mots. <br/></p>
+<p>Associée à la probabilité du mot en cours, la distance de Levenshtein permet de prendre en compte quelques défauts d’orthographe ou de variations. Toutefois elle ne saurait être réellement efficace sans une lemmatisation du mot prédit. En effet, l’argot des réseaux sociaux, les abbréviations ou encore les fautes de conjugaisons sont des obstacles à l’utilisation de cette distance. <br/></p>
+<p>Sachant que les émojis sont le plus souvent utilisé via les messageries instantanées ou les SMS, à savoir les canaux où l'orthographe n'est pas forcément toujours respecté, je pense que cette formule est très vite limitée. <br/></p>
+<p>De plus, l’algorithme de Leventshein est surtout utilisé pour comparer des chaînes courtes. Pour des chaînes plus longues, d’autres algorithmes sont plus efficaces <em>(algorithmes de Jaccard,  Term Frequency-Inverse Document Frequency)</em>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>La distance de Levenshtein va donc nous permettre de mesurer mathématiquement la similitude entre deux mots. Si la distance est égale à 0, alors les mots sont égaux, si elle vaut 1, alors il y a un caractère qui les différencie, etc. <br/></p>
+<p>Avec d'autres fonctions, elle s'appuie sur un lexique pré-déterminé, ce qui amène des limites dans son utilisation.
+Pour que cette formule soit la plus efficace possible, il faudrait donc mettre à jour le lexique et ce, quotidiennement. Humainement, cela demanderai un travail monstrueux:</p>
+<ul>
+<li>comment alimenter le lexique ?</li>
+<li>comment et où trouver les nouveaux mots ?</li>
+<li>comment distinguer toutes les conjugaison et erreurs possibles des mots ?</li>
+<li>(surtout) comment dénicher les mots en argot qui sont le plus utilisés par les canaux de messagerie instantanée et SMS ?</li>
+</ul>
+<p>De plus, la distance ne s'applique pas aux phrases mais uniquement aux mots. Cela pourrait également être une des prochaines études à réaliser...</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Sources">Sources<a class="anchor-link" href="#Sources">&#182;</a></h2>
 </div>
 </div>
@@ -13475,7 +13505,9 @@ Elle est en anglais ;)</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="https://hal-amu.archives-ouvertes.fr/tel-02491135/document">https://hal-amu.archives-ouvertes.fr/tel-02491135/document</a> <br/></p>
-<p><a href="https://fr.wikipedia.org/wiki/Distance_de_Levenshtein">https://fr.wikipedia.org/wiki/Distance_de_Levenshtein</a></p>
+<p><a href="https://fr.wikipedia.org/wiki/Distance_de_Levenshtein">https://fr.wikipedia.org/wiki/Distance_de_Levenshtein</a> <br/></p>
+<p><a href="http://nicolas.francois.free.fr/fichiers/algo/se_levenshtein.pdf">http://nicolas.francois.free.fr/fichiers/algo/se_levenshtein.pdf</a> <br/></p>
+<p><a href="https://blog.sodifrance.fr/algorithme-de-levenshtein-en-c-net/">https://blog.sodifrance.fr/algorithme-de-levenshtein-en-c-net/</a></p>
 
 </div>
 </div>
