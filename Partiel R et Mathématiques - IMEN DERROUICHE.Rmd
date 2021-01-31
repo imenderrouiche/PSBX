@@ -1,0 +1,780 @@
+---
+title: "Partiel R et Mathématiques - IMEN DERROUICHE"
+author: "Imen Derrouiche"
+date: "30/01/2021"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Mon GitHub
+<https://github.com/imenderrouiche/PSBX>
+
+
+# Introduction
+Pour évaluer chacun des travaux évalués, nous allons nous appuyer sur ces 5 critères d'évaluation:
+
+* La facilité à comprendre le document;
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes;
+* L’existence d’un fil conducteur dans le document;
+* L’existence d’une contribution personnelle de la part de l’étudiant;
+* La différenciation de chaque partie du dossier.
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Approche mathématiques - Émojis
+<br>
+
+## Lien GitHub du travail
+<https://github.com/imenderrouiche/PSBX/blob/main/Approche%20mathématiques%20-%20Émojis.ipynb>
+<br>
+
+## Nom de l'auteur du travail
+Imen Derrouiche
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier une formule mathématiques sur la "Recommandation automatique et adaptative d’emojis".
+
+La formule étudiée était la distance de Levenshtein. Cette formule nous permet de calculer le nombre d’étapes minimales nécessaires pour transformer la chaîne de caractères a en b. Le résultat de cette formule est donc un nombre entier.
+
+Afin d'obtenir cette distance, nous devons calculer le nombre minimal de caractères qu’il faut supprimer, insérer ou remplacer pour passer d’une chaîne à l’autre.
+<br>
+
+## Extrait commenté du code
+<br>
+
+### Formule de l'algorithme de Levenshtein:
+![](Formule Émojis.png)
+
+
+La distance de Levenshtein mesure le degré de similarité entre deux chaînes de caractères. 
+
+Elle est égale au nombre minimal de caractères qu’il faut supprimer, insérer ou remplacer pour passer d’une chaîne à l’autre. C’est une distance au sens mathématique du terme: c’est un nombre positif ou nul.
+
+Deux chaînes sont identiques si et seulement si leur distance est nulle.
+
+Nous calculons cette distance en répétant les étapes suivantes:
+
+* Construire une matrice M de longueur_mot_2+1 lignes et longueur_mot_1+1 colonnes;
+* Initialiser la première ligne par la matrice ligne [ 0,1,….., longueur_mot_2-1, longueur_mot_2] et la première colonne par la matrice colonne [ 0,1,….., longueur_mot_1-1, longueur_mot_1];
+
+On remplit ensuite la matrice M en utilisant la règle suivante M[i, j] est égale au minimum entre les éléments suivants :
+
+* L’élément directement au-dessus et on ajoute 1 : M[i-1, j] + 1. (effacement)
+* L’élément directement avant et on ajoute 1 : M[i, j-1] + 1. (insertion)
+* L’élément diagonal précédent plus le coût : M[i-1, j-1] + Cout(i-1, j-1). (substitution)
+
+Enfin, la distance de Levenshtein entre les chaînes 1 et 2 se retrouve en M[longueur_mot_1, longueur_mot2_]
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est facile à comprendre et convient à un étudiant avec un niveau moyen à faible en mathématiques.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le travail illustre l'algorithme avec l'exemple du déroulé des étapes de l'algorithme avec deux mots choisis "Chien" et "Niche".
+* L’existence d’un fil conducteur dans le document: nous observons bien un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part de l’étudiante: nous notons que l'étudiante a fait part de son avis dans la partie **Limites de la distance de Levenshtein**.
+* La différenciation de chaque partie du dossier: les parties du travail sont bien séparées par des titres avec des tailles différentes pour les différentes sections.
+<br>
+
+## Conclusion
+
+Ce travail (réalisé par moi-même) n'était pas compliqué à étudier. La thèse était certe longue mais bien commentée et illustrée avec des exemples.
+
+L'étude de la distance de Levenshtein était très intéressante et pourra être très utile en algorithmie. Je m'en suis déjà servie pour des devoirs en Python.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Statsmodels
+<br>
+
+## Lien GitHub du travail
+<https://github.com/imenderrouiche/PSBX/blob/main/Documentation%20Statsmodels.ipynb>
+<br>
+
+## Nom de l'auteur du travail
+Imen Derrouiche
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier le module Python **Statsmodels** afin de comprendre quels étaient ses fonctionnalités.
+
+Ce module **fournit des classes et des fonctions pour l'estimation de nombreux modèles statistiques différents**. Il permet également de réaliser des tests statistiques, d'explorer des données statistiques, de dessiner des tracés, etc.
+
+Dans ce travail, nous avons chargé une base de données et nous avons étudié, à l'aide du module statsmodels, certaines statistiques. Nous avons d'abord commencé par observer les valeurs de la base de données puis à sélectionner les colonnes pertinentes. Nous avons ensuite nettoyé la base de données en supprimant les lignes avec des valeurs vides.
+
+Enfin, nous sommes allés plus loin en faisant des statistiques plus poussées.
+<br>
+
+## Extrait commenté du code
+
+### Ajustement d'un modèle statistique:
+![](Formule Statsmodels.png)
+Soit X et Y des variables de notre jeu de données.
+
+L'ajustement d'un modèle dans statsmodels implique généralement 3 étapes plutôt faciles:
+
+* On utilise la classe de modèle pour décrire le modèle;
+* On ajuste le modèle à l'aide d'une méthode de classe;
+* On inspecte les résultats à l'aide d'une méthode de synthèse.
+
+Dans la figure ci-dessous, nous avons affecté à "mod" la régression linéaire sur les variables. Nous avons ensuite fitté mod puis affiché les résultats.
+
+Cela nous permet, à l'aide de 2 lignes de codes seulement, d'avoir toutes les statistiques de la régression linéaire sur nos variables de façon très rapide.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est facile à comprendre et convient à un étudiant avec un niveau moyen en programmation
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le module est illustré via l'importation d'une base de données et les différentes applications de statsmodels sur ce jeu de données.
+* L’existence d’un fil conducteur dans le document: nous observons bien un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part de l’étudiante: nous notons que l'étudiante n'a pas donné d'avis personnel sur cette documentation.
+* La différenciation de chaque partie du dossier: les parties du travail sont bien séparées par des titres avec des tailles différentes pour les différentes sections.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Automating biomedical data science through tree-based pipeline optimization
+<br>
+
+## Lien GitHub du travail
+<https://github.com/imenderrouiche/PSBX/blob/main/Automating%20biomedical%20data%20science%20through%20tree-based%20pipeline%20optimization.pdf>
+<br>
+
+## Nom de l'auteur du travail
+Olfa Lamti
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'aborder le concept d'optimisation des pipelines à base d'arbres pour automatiser une des parties du machine learning: la conception des pipelines.
+
+Pour cela, l'outil **TPOT** (**T**ree-**B**ased **O**ptimization **T**ool) était requis. TPOT permet de construire des pipelines d'apprentissage machine qui peuvent atteindre une précision de classification compétitive.
+
+Bon à savoir: cet outil, en plus d'être en open source, est très bien documenté !
+<br>
+
+## Extrait commenté d'une partie du travail
+Nous observons que TPOT dispose de son propre algorithme de recherche pour trouver les meilleurs paramètres et ensemble de modèles afin d'évaluer et modifier aléatoirement certaines parties des pipelines dans le but de trouver l'algorithme le plus performant.
+
+Cette partie est très intéressante car, en plus de nous offrir un algorithme performant, TPOT peut résoudre des problèmes que nous ne savons pas encore résoudre. Il fait cela grâce à la programmation génétique (c'est un type d'algorithme évolutif). 
+
+La programmation génétique va permettre de faire évoluer séquentiellement les opérateurs et paramètres des pipelines dans le but de maximiser la précision de la classification des pipelines. Cela se fait grâce à des algorithmes.
+
+Ces algorithmes utilisent des mutaions aléatoires, des croisements ou encore des générations d'évolution pour résoudre des tâches définies par l'utilisateur.
+
+De plus, TPOT étant en open source, pour les personnes expérimentées en développement cela peut être très intéressant. En effet, les développeurs peuvent eux-mêmes modifier le code source de l'outil à différentes fins.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est facile à comprendre et convient à un étudiant avec un niveau moyen à faible en programmation.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le travail proposé ne donne pas d'exemple concret comme l'utilisation de l'algorithme ou bien les résultats de l'algorithme. Cela est dommage car on aurait pu l'étudier et le tester directement.
+* L’existence d’un fil conducteur dans le document: nous observons bien un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part de l’étudiante: nous n'observons aucune remarque personnelle de la part de l'étudiante.
+* La différenciation de chaque partie du dossier: les parties du travail sont bien séparées par des titres.
+<br>
+
+## Conclusion
+Ce travail n'est pas complexe à comprendre et l'outil TPOT semble très intéressant et performant.
+
+Néanmoins, je trouve cela dommage que nous ne trouvons pas de cas concret ou d'illustration de l'outil ou de l'algorithme dans ce travail. Cela aurait pu nous permettre de mieux visualiser les choses.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Data visualisation interactive avec Plotly
+<br>
+
+## Lien GitHub du travail
+<https://github.com/imenderrouiche/PSBX/blob/main/Plotly.Rmd>
+<br>
+
+## Nom de l'auteur du travail
+* Imen Derrouiche
+* Olfa Lamti
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier la data visualisation avec le package Plotly.
+
+Plotly est un package open source qui nous permet de créer une variété de graphiques interactifs de qualité tels que des graphiques linéaires, des nuages de points, des graphiques à barres, des boîtes à moustaches, des histogrammes, des cartes, etc.
+
+Nous pouvons aussi, grâce à ce package et à la fonction subplot(), organiser nos visuels afin de réaliser des dashboards dynamiques et donc faire de la data visualisation.
+<br>
+
+## Extrait commenté du code
+
+### Ajustement d'un modèle statistique:
+![](Code Plotly.png)
+
+Dans la figure ci-dessus, nous faisons de la data visualisation avec Plotly.
+
+En effet, à partir d'un jeu de données qui est "Iris" et des variables "Sepal.Length" et "Petal.Length", nous dessinons un nuage de points à l'aide du paramètre *mode = 'markers'*.
+
+On aurait pu, à la place des points, obtenir des lignes avec le paramètre *mode = 'lines'*.
+
+Le *type = 'scatter'* nous permet d'avoir des points dispersés alors que le *type = 'histogram'* nous permet d'obtenir un histogramme comme ci-dessous:
+
+
+![](Code Plotly histogramme.png)
+
+D'autres types pourraient nous permettre de dessiner des diagrammes en camembert, des cartes, des boîtes à moustache et même des graphiques en 3 dimensions !
+
+Plotly nous offre un réel condensé de possibles. Il existe des documentations très bien documentées à son sujet.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant en programmation.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le travail illustre bien la data visualisation avec les différents tracés et les explications pour chaque tracé.
+* L’existence d’un fil conducteur dans le document: nous observons bien un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part des étudiantes: nous n'observons pas d'avis ou de critique dans cette documentation.
+* La différenciation de chaque partie du dossier: les parties du travail sont bien séparées par des titres avec des tailles différentes pour les différentes sections.
+<br>
+
+## Conclusion
+
+Ce travail (réalisé par Olfa et moi-même) était très agréable à étudier. Nous avons trouvé beaucoup de documentations sur Internet qui nous ont aidé à rédiger la documentation.
+
+La data visualisation est quelque chose que nous utilisons beaucoup à l'école et qu'il est intéressant d'utiliser ou de mettre en place au travail. Nous avons pu nous aider de cette documentation pour nos différents devoirs.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier JANITOR
+<br>
+
+## Lien GitHub du travail
+<https://github.com/imenderrouiche/PSBX/blob/main/JANITOR%20DOCUMENTATION.pdf>
+<br>
+
+## Nom de l'auteur du travail
+Marion Danyach
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier et de nettoyer de façon rapide des jeux de données.
+
+Le package JANITOR fournit des fonctions très similaires à celles d'Excel ou encore SPSS. En effet, nous allons voir que les fonctions proposées peuvent être codées par des étudiants avec un niveau de programmation assez bon.
+
+Néanmoins, ce package se montre très utile pour des étudiants débutants qui souhaitent nettoyer leur jeu de données rapidement et simplement.
+
+Avec JANITOR, nous pouvons notamment: 
+
+* Harmoniser les noms de toutes les colonnes;
+* Obtenir la fréquence d'un vecteur;
+* Supprimer les colonnes vides;
+* Formater les données;
+* Convertir des formats de dates...
+<br>
+
+## Extrait commenté du code
+Nous allons ci-dessous détailler des exemples de ce que nous permet JANITOR de faire:
+
+* **janitor::clean_names** : cette fonction permet de mettre toutes les colonnes du jeu de données en minuscule. Cela peut s'avérer utile lorsqu'on a certaines colonnes en majuscules et d'autres en minuscules;
+* **tabyl(*nom_jeu_de_donnes*, *nom_colonne*)** : cette fonction permet d'étudier la fréquence d'un vecteur. Nous pouvons nous en servir dans l'analyse de données quantitatives;
+* **remove_empty** : cette fonction va nous permettre de supprimer les colonnes vides. Cela est utile lorsque nous voulons nettoyer notre base de données dans le but qu'elle soit le plus optimale;
+* **excel_numeric_to_date** : lorsque nous importons des données Excel, le format est parfois du type "42233". Afin de récupérer le bon format de date, nous devons utiliser cette fonction.
+
+Les fonctions ci-dessus sont les fonctions qui m'ont paru les plus pertinentes de relever. Il existe néanmoins d'autres fonctions sur ce package.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant en programmation.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le package est illustré avec des exemples ce qui rend sa compréhension facile.
+* L’existence d’un fil conducteur dans le document: nous n'observons pas particulièrement de fil conducteur dans cette documentation.
+* L’existence d’une contribution personnelle de la part de l’étudiante: nous n'observons pas d'avis ou de critique dans cette documentation de la part de l'étudiante.
+* La différenciation de chaque partie du dossier: les parties de la documentation ne sont pas séparées par des titres.
+<br>
+
+## Conclusion
+
+Ce travail n'était pas compliqué à étudier. La documentation est facile à lire et à comprendre. Elle convient à tous les niveaux de programmation.
+
+Les fonctions de JANITOR sont simples à utiliser et peuvent être mises en pratique dès lors que nous utilisons un jeu de données.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier API web avec Plumber
+<br>
+
+## Lien GitHub du travail
+<https://github.com/imenderrouiche/PSBX/blob/main/API-web-avec-Plumber.pdf>
+<br>
+
+## Nom de l'auteur du travail
+
+* Marion Danyach
+* Olfa Lamti
+* Imen Derrouiche
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier la manière d'intégrer des graphiques sur R vers des sites Web grâce au package Plumber.
+
+Ce package nous permet de communiquer de manière dynamique les analyses et les travaux réalisés sur R.
+
+Pour se faire, Plumber va convertir le code R en **API REST** afin que le code soit compatible sur l'API.
+
+A savoir: une **API** est une **I**nterface **A**pplicative de **P**rogrammation qui permet d’établir des connexions entre plusieurs logiciels pour échanger des données.
+
+Ces interfaces de programmation permettent d’enrichir un programme avec des fonctions issues d’un autre logiciel pour développer des fonctionnalités plus poussées ou importer des données pré-organisées, traitées et/ou intégrées ailleurs.
+
+Pour cela, il existe deux possibilités :
+
+* Développer ses propres API pour un usage interne (par exemple pour faire communiquer une application mobile avec son interface web de back-office)
+* Utiliser des API conçues et publiées par d’autres organismes.
+
+*Source: <https://www.mobizel.com/definition-cest-quoi-une-api/>*
+<br>
+
+## Extrait commenté de la documentation
+Plumber est donc un package qui nous permet de convertir notre code R en API web. Afin de créer l'API web, il suffit simplement d'ajouter des commentaires dans le code R.
+
+Nous allons étudier un des commentaires nous permettant de créer une API web. Il faut bien évidemment créer un fichier "Plumber API" sur la console RStudio: une fois ce code créé, un code va se générer automatiquement.
+
+### Exemple d'API avec la méthode GET et le chemin ECHO:
+![](Code Plumber.png)
+
+Explications du code ci-dessus:
+
+* "#" : annotation Swagger. Cela va permettre de décrire la structure de l'API afin qu'elle puisse être lue.
+* "#*" : permet d'écrire les commentaires.
+* "#* @apiTitle Plumber Example API" : permet d'ajouter un titre à notre API.
+* "#* Echo back the input" : permet d'obtenir un commentaire de la fonction.
+* "#* @param msg The message to echo" : permet d'afficher les paramètres de la fonction.
+* "#* @get /echo" : permet d'indiquer la méthode HTTP utilisée ainsi que le chemin. Dans notre cas, la méthode utilisée est **GET** et le chemin est représenté par **/ECHO**
+* Ensuite vient le code R: on pourra coder un graphique, un histogramme, une carte, etc.
+
+Une fois l'API lancée, une interface s'ouvre et on y observe les différents paramètres inscrits en commentaires qui s'implémentent automatiquement.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant en programmation. Néanmoins, plus on souhaite avoir une API visuelle, plus il faut un niveau poussé.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le package est illustré avec des exemples ce qui rend sa compréhension facile.
+* L’existence d’un fil conducteur dans le document: nous observons un fil conducteur dans cette documentation.
+* L’existence d’une contribution personnelle de la part des étudiantes: nous n'observons pas d'avis ou de critique dans cette documentation.
+* La différenciation de chaque partie du dossier: les parties de la documentation sont bien séparées par des titres.
+<br>
+
+## Conclusion
+
+Ce travail est intéressant lorsque l'on souhaite commencer à coder des petites API. Je ne pense pas que la documentation convienne à des étudiants expérimentés mais plutôt à des étudiants qui souhaitent se lancer dans ce sujet.
+
+Cette documentation est très bien expliquée et est facile à mettre en action.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier dplyr
+<br>
+
+## Lien GitHub du travail
+<https://github.com/soukainaElGhaldy/PSB-X/blob/main/R_packages/dplyr_package/Dplyr%20cheat%20sheet.pdf>
+<br>
+
+## Nom de l'auteur du travail
+Soukaina El Ghaldy
+<br>
+
+## Synthèse du travail
+Cette documentation renvoie au package dplyr. On y retrouve une fiche mémo avec l'ensemble des fonctions dplyr que l'on utilise sur R.
+
+dplyr est une **extension facilitant le traitement et la manipulation de données** contenues dans une ou plusieurs tables. Elle propose une syntaxe claire et cohérente, sous formes de verbes, pour la plupart des opérations de ce type.
+
+Elle regroupe un très grand nombre de fonctions qui permettent de manipuler des jeux de données de grande taille.
+
+On retrouve de nombreuses fiches mémo, documentations et réponses sur les forums à son sujet.
+
+*Source: <http://larmarange.github.io/analyse-R/manipuler-les-donnees-avec-dplyr.html>*
+<br>
+
+## Extrait commenté de la documentation
+Les fonctions de la fiche mémo étant assez nombreuses, nous expliquerons et illustrerons que certaines d'entres elles.
+
+* **slice**(*jeu_de_données, ligne_a_afficher*) : va nous permettre d'afficher la ligne inscrite en paramètre du jeu de données incrit en paramètre. On peut également sélectionner plusieurs lignes à afficher en modifiant le second paramètres. Cela peut être utile lorsque l'on fait du picking dans un jeu de données.
+* **filter**(*colonne_sur_laquelle_on_filtre, condition_du_filtre*) : va nous permettre de sélectionner des lignes d’un jeu de données selon une condition inscrite en paramètre. On pourrait par exemple filtrer sur la colonne *sexe* et sélectionner uniquement les *filles*.
+* **select**(*jeu_de_donnes, colonne_a_afficher, colonne_a_afficher*) : va nous permettre de sélectionner et d'extraire des colonnes d’un jeu de données. On peut sélectionner une à plusieurs colonnes.
+* **group_by**(*colonne_a_grouper*) : va nous permettre de grouper des lignes à partir d'une ou plusieurs colonnes. C'est une des fonctions très importantes de dplyr.
+* **count**(*colonne_a_compter*) : va nous permettre de compter le nombre de lignes par groupe.
+
+A noter que toutes ces fonctions ont leur équivalent en langage SQL, et vice-versa.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant en programmation.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le package n'est pas illustré avec des exemples mais on en trouve un très grand nombre sur Internet.
+* L’existence d’un fil conducteur dans le document: nous observons effectivement un fil conducteur dans cette fiche mémo.
+* L’existence d’une contribution personnelle de la part de l’étudiante: nous n'observons pas d'avis ou de critique dans cette fiche mémo
+* La différenciation de chaque partie du dossier: les parties de la fiche mémo sont bien séparées par des titres et par des sections.
+<br>
+
+## Conclusion
+
+Cette fiche mémo est très simple à lire. Elle est divisée par type de fonctions ce qui rend la recherche plus efficace. 
+
+Le fait qu'il n'y ai pas d'exemples concrets n'est pas dérangeant car c'est assez intuitif et on peut trouver les réponses à nos questions sur les forums.
+
+De plus, elle convient à tous les niveaux de programmation.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Dérivée
+<br>
+
+## Lien GitHub du travail
+<https://github.com/CorentinBretonniere/CBRETONNIERE-PSBX/blob/main/Dérivée.pdf>
+<br>
+
+## Nom de l'auteur du travail
+Corentin Bretonniere
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier les fonctions dérivées en mathématiques.
+
+Pour rappel:
+
+Soit "*I*" un intervalle de "*R*" et soit *f* une fonction définie sur "*R*". 
+On dit que la fonction *f* est dérivable sur "*I*" si elle est dérivable en tout nombre réel "*x*" de "*I*".
+
+Dans ce cas, la fonction qui à tout "*X*" appartenant à "*I*" associe le nombre dérivé "*f'(x)*" de "*f*" en "*x*" s'appelle la fonction dérivée de "*f*".
+
+*Source: <https://www.educastream.com/fonction-derivee-1ere-s>*
+
+Les dérivées vont nous permettre de connaître les pentes des fonctions et donc de savoir si les fonctions sont croissantes ou décroissantes.
+
+Cela nous permettra de déduire très rapidement le sens de variation d'une fonction.
+<br>
+
+## Extrait commenté du code
+Bien que nous souhaitons traiter les aspects mathématiques de ce document, nous allons également traiter comment coder les dérivées sur R.
+
+Pour que le code soit exploitable par tous les étudiants, peu importe leur niveau, nous allons étudier un code assez simpliste mais efficace dans le calcul des dérivées.
+
+Prenons l'exemple de la documentation qui est la fonction x<sup>2</sup>+3x
+
+Avec la simple fonction "*D*", nous pouvons dériver toutes les fonctions après les avoir définies au préalable.
+
+Ainsi, grâce à deux lignes de code seulement (une pour la déclaration de la fonction et une pour le calcul de la dérivée), nous pouvons calculer une dérivée de façon instantanée.
+
+Plus encore, nous pouvons également calculer des dérivées avec deux inconnues, comme la fonction: x<sup>2</sup>+3x+5y<sup>6</sup>
+
+Pour les étudiants plus expérimentés, il existe des méthodes plus compliquées afin de trouver la dérivée mais toutes aussi efficaces que celles-ci.
+
+A première vue, la méthode *facile* ne démontre aucune limite/aucun défaut. Elle s'avère très utile lorsque l'on traite sur des sujets de variation des fonctions.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant tout comme un étudiant avec un niveau plus expérimenté en mathématiques.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: la dérivée est illustrée avec des exemples simples et moins simples ce qui rend sa compréhension facile.
+* L’existence d’un fil conducteur dans le document: nous observons effectivement un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part de l’étudiant: nous n'observons pas d'avis ou de critique dans ce travail.
+* La différenciation de chaque partie du dossier: les parties de la documentation sont bien séparées par des titres ce qui rend sa lecture fluide.
+<br>
+
+## Conclusion
+
+Ce travail s'avère être très utile lorsque l'on souhaite dériver des fonctions et connaître le sens de variation des fonctions.
+
+De plus, on peut s'amuser avec des méthodes plus compliquées pour trouver les dérivées, ce qui est plus intéressant pour les étudiants avec un bon niveau de programmation.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Validation Croisée
+<br>
+
+## Lien GitHub du travail
+<https://github.com/Nicolas-all/PSB1/blob/main/Validation-Croisée.pdf>
+<br>
+
+## Nom de l'auteur du travail
+* Rindra Lutz
+* Nicolas Allix
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but de définir au préalable les différentes familles de méthodes dans le datamining, à savoir:
+
+* Les méthodes descriptives
+* Les méthodes prédictives
+
+Ensuite, nous évoquons le coeur du travail: **la validation croisée**.
+
+On retrouvera également une partie sur la gestion des bases de données non équilibrée en fin du document.
+<br>
+
+## Extrait commenté du code
+Nous apprenons grâce à ce travail que la validation croisée permet de mesurer la fiabilité d'un modèle.
+
+En temps normal, pour réaliser une modélisation, nous définissons une population d'apprentissage pour entrainer le modèle et une population de test pour mesurer et tester la performance et la robustesse du modèle.
+
+La validation croisée va être différente dans le sens où on **ajoute une étape: la validation**.
+
+Ici, on va améliorer la fiabilité dans le sens où cette étape de validation va permettre de tester plusieurs modèles sur la population d'apprentissage, de garder celui qui paraît le plus performant et de le tester sur la population de test.
+
+Là où la validation croisée va être très intéressante est par ses 3 méthodes **LOOCV**, **LKOCV** et la méthode des **k-fold**.
+
+Il y a cependant des **limites**: en effet, le surapprentissage est un phénomène très récurrent en modélisation. Cela concerne notamment les modèles complexes. 
+Je pense que la validation croisée est a utiliser à bon escient. Il faut bien définir en amont sur les populations d'apprentissage et de test.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant en mathématiques.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le travail n'est malheureusement pas illustré avec des exemples. Cela aurait été plus facile de comprendre certaines méthodes avec des exemples.
+* L’existence d’un fil conducteur dans le document: nous observons effectivement un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part de l’étudiant: nous n'observons pas d'avis ou de critique dans ce travail.
+* La différenciation de chaque partie du dossier: les parties de la documentation sont bien séparées par des titres.
+<br>
+
+## Conclusion
+
+Ce travail n'était pas compliqué à étudier. Les phrases étaient claires.
+
+Cependant, je pense que certaines méthodes auraient dûes être expliquées, comme les 3 principales méthodes de validation croisée, sachant que la validation croisée est le sujet du travail.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier GDATA
+<br>
+
+## Lien GitHub du travail
+<https://github.com/Ahmed-Abbes5/psbx/blob/main/Package-gdata.pdf>
+<br>
+
+## Nom de l'auteur du travail
+Ahmed Abbes
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier le package **GDATA**.
+
+Nous apprenons que ce package permet de manipuler des bases de données, notamment des bases provenant d'Excel. Il permet également, comme Plotly que nous avons étudié précédemment, de faire de la data visualisation.
+
+Il semble vraiment intuitif à utiliser.
+
+Points clés de la documentation: 
+
+* Dans cette documentation, on importe d'abord la librairie **GDATA**
+* On importe ensuite un jeu de données qu'on va afficher de façons différentes
+* On regarde également l'existence de doublons
+* On apprend comment modifier les libellés des colonnes
+* On a la possibilité de connaître les types d'objets
+* Enfin, on peut mettre à jour le jeu de données en créant des nouvelles lignes de données
+
+<br>
+
+## Extrait commenté de la documentation
+Les fonctions ci-dessous sont les fonctions qui m'ont paru les plus pertinentes de relever. Il existe néanmoins beaucoup d'autres fonctions sur ce package.
+
+* *df <- read.xls(chemin_vers_mon_jeu_de_données)* : *read.xls* va permettre de lire le fichier Excel. Ce fichier Excel va ensuite être attribué à la variable *df* (on aurait pu l'appeler avec n'importe quel autre nom). C'est la première étape avant de pouvoir réaliser des opérations sur la base de données.
+* *x <- as.data.frame(df)* : ici on fait en sorte que *df* soit reconnue comme un data frame dans le but de pouvoir réaliser toutes nos actions sur la base de données. Ce n'est pas obligatoire mais c'est une étape qui est recommandée avant la manipulation de la table. On affecte le dataframe *df* à la variable *x* (qu'on aurait pu appeler avec n'importe quel autre nom).
+* *summary(x)* : cette fonction est bien connue: elle permet de visualiser globalement les informations de la base de données. On y retrouve le nom des colonnes, leur type ou encore leur taille. Cette fonction n'est pas propre au package **GDATA**.
+* *first(x, n = 10)* : va permettre d'afficher les 10 premières lignes du dataframe *x*. Pour afficher plus ou moins de lignes, il suffit de modifier le nombre après le "=". Cela nous donne un aperçu des premières lignes de la base.
+* *rename.vars(x, from = "Ancien_nom_colonne", to = "Nouveau_nom_colonne")* : cette fonction est très intuitive. Elle permet de changer le nom d'une colonne.
+* *is.what(x)* : nous permet de connaître le typage de l'objet *x*.
+
+Ces fonctions sont très utilisées lorsqu'on manipule des bases de données. Il en existe encore un paquet mais celles-ci m'ont paru les plus pertinentes dans le sens où c'est presque un passage obligatoire lorsqu'on charge une base de données.
+
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail est très facile à comprendre et convient à un étudiant avec un niveau débutant en programmation.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: le package est illustré avec des exemples ce qui rend sa compréhension beaucoup plus facile.
+* L’existence d’un fil conducteur dans le document: nous observons un fil conducteur progressif dans cette documentation.
+* L’existence d’une contribution personnelle de la part de l’étudiant: nous n'observons pas d'avis ou de critique dans cette documentation.
+* La différenciation de chaque partie du dossier: les parties de la documentation sont séparées par des phrases.
+
+<br>
+
+## Conclusion
+
+Ce travail n'était pas compliqué à étudier. La documentation est facile à lire et à comprendre. Elle convient à tous les niveaux de programmation.
+
+Ces fonctions sont très utiles car il arrive très souvent que l'on charge des bases de données Excel sur R. Les fonctions ci-dessus nous seront d'une aide précieuse afin d'effectuer les premières manipulations sur celles-ci.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier XGBoost
+<br>
+
+## Lien GitHub du travail
+<https://github.com/ZakariaRida96/PSBX/blob/main/mathematique%20big%20data/XGboost.pdf>
+<br>
+
+## Nom de l'auteur du travail
+Chaymae Gasmi
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier **XGBoost** qui est une bibliothèque optimisée de renforcement de gradient distribué. Cette bibliothèque est très efficace, portable et flexible.
+
+Cette bibliothèque va implémenter des algorithmes d'apprentissages automatiques (nous en avons parlé précédemment) dans le cadre du Gradient Boosting.
+
+Elle fournit également un boost d'arborescence parallèle qui résout de nombreux problèmes de data science de façon rapide et précise.
+
+Comme nous l'avons vu précédemment, il ne suffit pas toujours de se fier aux résultats d'un seul modèle d'apprentissage automatique. Parfois, il faut réaliser un ensemble d'apprentissage afin d'obtenir le meilleur modèle.
+
+<br>
+
+## Extrait commenté du code
+Pour être tout à fait honnête, je ne pense pas avoir bien compris cette documentation, sûrement que cela est dû au fait que je ne connaissais pas du tout **XGBoost**.
+
+La partie 1 avec les définitions m'a paru claire, mais je n'ai pas compris les parties 2 à 7. 
+
+* Est-ce des fonctions ? 
+* Des méthodes de calculs qu'on retrouve sur XGBoost ?
+* Des paramètres d'XGBoost ?
+* Existe-t-il un lien entre ces parties ? Si oui lequel ?
+* A quoi servent ces parties ?
+
+J'ai compris la partie 3 sur l'*Additive training*. A partir d'une première prédiction constante, on va à chaque fois en ajouter une nouvelle et les cumuler.
+
+Cependant, je ne sais pas à quoi cela sert, ni dans quel contexte l'utiliser...
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail n'a pas été facile à comprendre pour ma part. Je pense qu'il convient à une personne douée en mathématiques avec quelques connaissances sur XGBoost.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: je n'ai malheureusement pas retrouvé d'exemple ou de cas d'utilisation d'XGBoost dans cette documentation.
+* L’existence d’un fil conducteur dans le document: s'il en existe un, je n'ai pas compris son sens.
+* L’existence d’une contribution personnelle de la part de l’étudiante: nous n'observons pas d'avis ou de critique dans cette documentation.
+* La différenciation de chaque partie du dossier: les parties de la documentation sont bien séparées par des titres.
+<br>
+
+## Conclusion
+
+Ce travail a, pour ma part, été très compliqué à étudier. 
+
+Je ne pense pas que ce soit un travail compliqué, je pense simplement qu'il manque des explications et des exemples.
+
+J'aurai aimé étudié plus en profondeur ce travail.
+<br>
+<br>
+<br>
+<br>
+
+# Dossier Cryptographie et théorie des nombres
+<br>
+
+## Lien GitHub du travail
+<https://github.com/ARSICMrk/ARSIC_PSBx/blob/main/Maths_BD/Cryptographie/Cryptographie.pdf>
+<br>
+
+## Nom de l'auteur du travail
+* Marko ARSIC
+* William ROBACHE
+<br>
+
+## Synthèse du travail
+Ce travail avait pour but d'étudier la cryptographie et la théorie des nombres.
+
+On apprend que la cryptographie s'est développée simultanément aux recherches et aux avancées sur la théorie des nombres.
+
+Aujourd'hui, la cryptographie est énormément utilisée pour garantir la confidentialité des échanges sur Internet, la protection des données sensibles et confidentielles des entreprises ou encore pour payer sur Internet.
+
+Dans ce travail, on retrouve dans les différentes parties des cryptages différents, séparés en deux grandes catégories :
+
+* Le cryptage à clé symétrique : dès lors que **la clé de codage permet directement de déduire la procédure de décryptage**, on parle de cryptage à clé symétrique. Ainsi, on en déduit qu'une même clé de codage permet à la fois de chiffrer et déchiffrer.
+* Le cryptage à clé asymétrique : ce cryptage permet à tous les utilisateurs d'envoyer un message au récepteur, mais **seul le récepteur peut déchiffrer ces messages avec la clé**.
+<br>
+
+## Extrait commenté du travail
+Dans cette partie, nous allons étudier et expliquer le **codage César**.
+
+Qu'est-ce que le codage César ? Il s'agit d'un **système de substitution** qu'utilisait Jules César pour communiquer avec ses armées. On en déduit que ce système est très ancien !
+
+Ce codage revient à faire un décalage sur l'alphabet:
+
+* On choisit une clé qui correspond à une lettre: la clé 0 correspond à la lettre A, la clé 1 correspond à la lettre B, la clé 2 correspond à la lettre C, etc.
+* On décale chaque lettre de l'alphabet en ajoutant la clé choisit à l'étape précédente.
+* Si on le souhaite, on peut avoir l'alphabet (26 lettres) + des chiffres, des symbôles ou des lettres avec des accents. Il faut définir quel est l'alphabet complet utilisé au préalable.
+* Le message est prêt à être codé !
+
+Bien que simpliste, ce système de codage était très utile à l'époque.
+
+Aujourd'hui, ce codage pourrait être décodé en quelques minutes à l'aide d'un algorithme tout simple.
+
+Heureusement, depuis Jules César, d'autres systèmes de codages ont vu le jour et sont beaucoup plus compliqués à déchiffrer.
+<br>
+
+## Évaluation du travail
+
+* La facilité à comprendre le document: le travail était très facile à comprendre et convient à un étudiant avec un niveau débutant en mathématiques. Les parties étaient claires et très bien expliquées.
+* L’utilisation d’exemples / de cas concrets pour illustrer les formules et  les algorithmes: les codages étaient très bien illustrés.
+* L’existence d’un fil conducteur dans le document: nous observons effectivement un fil conducteur dans ce travail.
+* L’existence d’une contribution personnelle de la part de l’étudiant: nous n'observons pas d'avis ou de critique dans ce travail.
+* La différenciation de chaque partie du dossier: les parties de ce travail sont bien séparées par des titres.
+<br>
+
+## Conclusion
+
+Ce travail était très intéressant à étudier.
+
+Je ne connaissais pas tous les codages. Je pense que certains d'entre eux pourraient être sympa à coder en R !
+<br>
+<br>
+<br>
+<br>
+
+# Conclusion
+A la fin du document, vous rédigerez une évaluation objective des deux travaux auxquels vous avez participé par rapport aux dix autres travaux des autres étudiants (entre 10 et 30 lignes).
+
+## Package R - Plotly
+
+J'ai travaillé sur le package R Plotly. Avec Olfa Lamti, nous avons essayé de mettre en place une documentation très complète.
+
+Nous avons pour cela:
+
+* rédigé une introduction et définit le sujet
+* traité de chaque grande partie de la data visualisation avec des parties bien séparées par des titres
+* définit chaque partie avec des définitions
+* illustré chaque partie avec des exemples
+* expliqué, pour chaque ligne de code, à quoi servaient les paramètres
+* cité nos sources
+
+Parmis les travaux sur les package R que j'ai pu résumer, on ne trouvait pas toujours de fil conducteur. Et surtout, les lignes de codes R avaient parfois des paramètres que je connaissais pas, qui n'étaient pas expliqués et que j'ai compris en regardant sur Internet.
+
+Je pense qu'il faudrait que chacune des documentations sur les packages R expliquent bien à quoi les lignes de codes et les paramètres servent. De plus, il faut penser à bien définir les termes énoncés car nous n'avons pas tous le même niveau en programmation.
+
+## Travail mathématiques - Emojis
+Pour ce travail, je ne me suis concentrée uniquement sur une formule mathématiques: la distance de Levenshtein.
+
+Je l'ai d'abord explicité, j'ai introduit la formule puis j'ai parlé de l'algorithme qui permet de calculer cette distance.
+
+J'ai essayé de bien définir les termes et d'illustrer l'algorithme avec un exemple (CHIEN VS NICHE).
+
+Je n'ai pas souhaité expliquer d'autres formules car en plus d'être compliquées par rapport à mon niveau, je souhaitais plutôt bien approfondir celle que j'ai étudié.
+
+Les travaux en mathématiques que j'ai pu étudier étaient parfois compliqués. Ajouté à cela le fait que parfois les sources ne soient pas citées, il m'était difficile de bien comprendre les formules, ou les rapports entre les différentes parties.
+
+Néanmoins, grâce à ces différents résumés, j'ai beaucoup appris, tant en R qu'en mathématiques. J'en ressors avec de nouvelles compétences que j'ai déjà pu mettre en place.
